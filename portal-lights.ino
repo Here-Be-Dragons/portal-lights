@@ -1,69 +1,60 @@
-// This #include statement was automatically added by the Particle IDE.
-#include "neopixel/neopixel.h"
+//For Neopixel strips
+#include <Adafruit_NeoPixel.h>
 
-SYSTEM_MODE(AUTOMATIC);
+// IMPORTANT: Set pixel COUNT and PIN
+#define PIN 6
+#define NUMPIXELS 60
 
-// IMPORTANT: Set pixel COUNT, PIN and TYPE
-#define PIXEL_PIN D6
-#define PIXEL_COUNT 163
-#define PIXEL_TYPE WS2812B
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
-
-int pos = 0; // Position, direction of "eye"
 int orange = 0; //Set to 1 for orange, or 0 for blue portal
-int portalColor;
+uint32_t portalColor = 0;
+uint8_t pos = 0; // Position tracking of pixels
 
 void setup()
 {
-  strip.begin();
-  //strip.setBrightness(255);
-  strip.show(); // Initialize all pixels to 'off'
-  if (orange == 1) {
-    portalColor = strip.Color(50, 15, 0);
-  } else {
-    portalColor = strip.Color(10, 10, 50);
-  }
+    strip.begin();
+    strip.show(); // Initialize all pixels to 'off'
+    if (orange == 0) {
+        portalColor = strip.Color(0, 170, 255); //Light Blue
+    } else {
+        portalColor = strip.Color(255, 125, 0); //Orange
+    }
 }
 
 
 void loop() {
 
-  // Draw 5 pixels centered on pos.  setPixelColor() will clip any
-  // pixels off the ends of the strip, we don't need to watch for that.
-
-    for (int i=0; i < strip.numPixels(); i++) {
-          strip.setPixelColor(i, 5 * portalColor);
-          //strip.setColorDimmed(i, 255, 50, 0, 8*i);
+    for (uint8_t i=0; i < strip.numPixels(); i++) { // Blank everything
+          strip.setPixelColor(i, 0);
     }
-      
-    for (int i=-5; i < strip.numPixels(); i+=5) {
-        for (int j = 0; j <= 1; j++) {
-            //strip.setPixelColor(pos + i + j, abs(50 * j), abs(15 * j), 0);
-            strip.setPixelColor(pos + i + j, abs(j) * portalColor);
+
+    for (int i=0; i < strip.numPixels() + 1; i+=5) {
+        for (int j = -2; j < 0; j++) {
+            strip.setPixelColor( pos + i + j, portalColor );
         }
     }
-    
+    strip.show();
+    delay(100);
 
-  strip.show();
-  delay(100);
-
-  // Rather than being sneaky and erasing just the tail pixel,
-  // it's easier to erase it all and draw a new one next time.
-  //for(j=-2; j<= 2; j++) strip.setPixelColor(pos+j, 0, 255, 0);
-
-  if(pos >= 11) {
-    pos = 0;
-  }
-  /*if(colorSwitch >= 50) {
-    colorSwitch = 0;
-    orange += 1;
-    if (orange % 2) {
-        portalColor = strip.Color(50, 15, 0);
-    } else {
-        portalColor = strip.Color(10, 10, 50);
+    if(pos >= 5) {
+        pos = 0;
     }
-  }*/
-  pos++;
-  //colorSwitch++;
+    pos++;
+
+/*    //##########
+    //The below if statement will switch between colors automatically for testing
+    static int colorSwitch = 0;
+    if(colorSwitch >= 50) {
+        colorSwitch = 0;
+        orange += 1;
+        if (orange % 2) {
+            portalColor = strip.Color(0, 170, 255);
+        } else {
+            portalColor = strip.Color(255, 125, 0);
+        }
+    }
+    colorSwitch++;
+    //##########
+*/
 }
