@@ -6,3 +6,5 @@ Hardware Needed:
 - A method to hang the mirrors (I used a 2x4 piece of wood and a photo hanging kit wire)
 - Enough WS2812B Individually-addressible LEDs
 - A 5v Arduino of your choosing (I used the Arduino Pro Mini, no need for anything fancy here)
+
+![Alt text](/images/portals.jpg?raw=true "Finished Product")
