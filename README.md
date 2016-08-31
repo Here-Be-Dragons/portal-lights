@@ -8,3 +8,5 @@ Hardware Needed:
 - A 5v Arduino of your choosing (I used the Arduino Pro Mini, no need for anything fancy here)
 
 ![Alt text](/images/portals.jpg?raw=true "Finished Product")
+![Alt text](/images/Back_Full.jpg?raw=true "Back View")
+![Alt text](/images/Back_Arduino.jpg?raw=true "Closeup of Arduino")
