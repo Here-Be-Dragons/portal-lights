@@ -43,5 +43,5 @@ void loop() {
     }
   }
   pos++;
-  pos %= 10; // Reset to 0 each time it gets to 5
+  pos %= 10; // Reset to 0 each time it gets to 10
 }
